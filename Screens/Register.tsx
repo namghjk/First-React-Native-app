@@ -8,6 +8,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Keyboard,
 } from 'react-native';
 import {color, images} from '../constants';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -71,6 +72,8 @@ const Register = () => {
             <View style={styles.inputContainer}>
               <Text style={styles.textInput}>Password</Text>
               <TextInput
+                blurOnSubmit={false}
+                onSubmitEditing={() => Keyboard.dismiss()}
                 placeholder="your password"
                 placeholderTextColor={color.placehoder}
                 secureTextEntry={true}
@@ -85,17 +88,11 @@ const Register = () => {
                 }}></TextInput>
               <Text style={styles.errorText}>{errorPassword}</Text>
             </View>
-            <View
-              style={{
-                flex: 6,
-                marginHorizontal: 15,
-                justifyContent: 'center',
-                minHeight: 85,
-                height: 100,
-                backgroundColor:'green'
-              }}>
+            <View style={styles.inputContainer}>
               <Text style={styles.textInput}>Re-enter password</Text>
               <TextInput
+                blurOnSubmit={false}
+                onSubmitEditing={() => Keyboard.dismiss()}
                 placeholder="your password"
                 placeholderTextColor={color.placehoder}
                 secureTextEntry={true}
@@ -187,13 +184,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     justifyContent: 'center',
     minHeight: 85,
-    height: 100,
+    maxHeight: 100,
   },
   Input: {
     borderBottomWidth: 1,
     borderColor: '#3399ff',
     fontSize: 16,
     minHeight: 45,
+    color: 'black',
   },
   textInput: {
     fontSize: 18,
@@ -202,7 +200,6 @@ const styles = StyleSheet.create({
   errorText: {
     color: 'red',
     fontSize: 12,
-    marginBottom: 15,
     marginTop: 5,
   },
   ButtonContainer: {
@@ -214,8 +211,8 @@ const styles = StyleSheet.create({
   buttonLogin: {
     backgroundColor: color.imageLogin,
     width: '50%',
-    minheight: '8%',
-    height: '70%',
+    minHeight: '65%',
+    maxHeight: '70%',
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
