@@ -5,6 +5,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 
@@ -187,22 +188,18 @@ const FoodIndex = props => {
         flex: 10,
       }}>
       <View style={{flex: 1}}></View>
-      <View
-        style={styles.straightHorizentalLine}
-      />
+      <View style={styles.straightHorizentalLine} />
       <View style={styles.flatItem}>
         <FlatList
           data={category}
           horizontal={true}
           renderItem={({item}) => (
-            <View style={{justifyContent:'center'}}>
-              <FoodItemRow category={item} key={item.name} />
-            </View>
+              <View style={{justifyContent: 'center'}}>
+                <FoodItemRow category={item} key={item.name} />
+              </View>
           )}></FlatList>
       </View>
-      <View
-        style={styles.straightHorizentalLine}
-      />
+      <View style={styles.straightHorizentalLine} />
 
       <View style={styles.scrollItem}>
         {/* <ScrollView style={{flex: 1}}>
@@ -242,8 +239,8 @@ const styles = StyleSheet.create({
     height: 120,
     minHeight: 120,
   },
-  straightHorizentalLine:{
+  straightHorizentalLine: {
     borderBottomColor: 'gray',
     borderBottomWidth: StyleSheet.hairlineWidth,
-  }
+  },
 });
