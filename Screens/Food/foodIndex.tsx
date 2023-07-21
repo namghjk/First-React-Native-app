@@ -5,12 +5,16 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 
 import FoodItem from './FoodItem';
 import FoodItemRow from './FoodItemRow';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const FoodIndex = props => {
   const [foods, setFoods] = useState([
@@ -182,27 +186,75 @@ const FoodIndex = props => {
     },
   ]);
 
+  const [textSearch, setTextSeacrh] = useState('');
+
+  const filteredFoood = () =>
+    foods.filter(eachFood =>
+      eachFood.name.toLowerCase().includes(textSearch.toLowerCase()),
+    );
+
   return (
-    <SafeAreaView
-      style={{
-        flex: 10,
-      }}>
-      <View style={{flex: 1}}></View>
-      <View style={styles.straightHorizentalLine} />
-      <View style={styles.flatItem}>
-        <FlatList
-          data={category}
-          horizontal={true}
-          renderItem={({item}) => (
+    
+      <SafeAreaView
+        style={{
+          flex: 10,
+        }}>
+        <View
+          style={{
+            flex: 0.5,
+            flexDirection: 'row',
+            marginHorizontal: 10,
+            marginVertical: 10,
+            alignItems: 'center',
+          }}>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: 'grey',
+              marginHorizontal: 10,
+              borderRadius: 8,
+            }}>
+            <Icon
+              name="search"
+              size={15}
+              color={'black'}
+              style={{padding: 10}}
+            />
+            <TextInput
+              autoCorrect={false}
+              onChangeText={text => {
+                setTextSeacrh(text);
+              }}
+              style={{
+                height: 35,
+                minHeight: 30,
+                backgroundColor: 'grey',
+                flex: 1,
+                opacity: 0.8,
+                marginEnd: 8,
+              }}
+            />
+          </View>
+          <Icon name="bars" size={25} color={'black'} />
+        </View>
+        <View style={styles.straightHorizentalLine} />
+        <View style={styles.flatItem}>
+          <FlatList
+            data={category}
+            horizontal={true}
+            renderItem={({item}) => (
               <View style={{justifyContent: 'center'}}>
                 <FoodItemRow category={item} key={item.name} />
               </View>
-          )}></FlatList>
-      </View>
-      <View style={styles.straightHorizentalLine} />
+            )}></FlatList>
+        </View>
+        <View style={styles.straightHorizentalLine} />
 
-      <View style={styles.scrollItem}>
-        {/* <ScrollView style={{flex: 1}}>
+        <View style={styles.scrollItem}>
+          {/* <ScrollView style={{flex: 1}}>
           {foods.map(eachFood => {
             return (
               <View style={styles.foodItemContainer}>
@@ -212,17 +264,24 @@ const FoodIndex = props => {
           })}
         </ScrollView> */}
 
-        <FlatList
-          data={foods}
-          renderItem={({item}) => (
-            <View style={styles.foodItemContainer}>
-              <FoodItem food={item} key={item.name} />
+          {filteredFoood().length > 0 ? (
+            <FlatList
+              data={filteredFoood()}
+              renderItem={({item}) => (
+                <View style={styles.foodItemContainer}>
+                  <FoodItem food={item} key={item.name} />
+                </View>
+              )}
+              keyExtractor={item => item.name}
+            />
+          ) : (
+            <View
+              style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+              <Text style={{fontSize: 38}}>Foods not found</Text>
             </View>
           )}
-          keyExtractor={item => item.name}
-        />
-      </View>
-    </SafeAreaView>
+        </View>
+      </SafeAreaView>
   );
 };
 
@@ -233,7 +292,7 @@ const styles = StyleSheet.create({
     flex: 1.2,
   },
   scrollItem: {
-    flex: 7.8,
+    flex: 8.3,
   },
   foodItemContainer: {
     height: 120,

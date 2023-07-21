@@ -4,7 +4,7 @@
 
 import {AppRegistry} from 'react-native';
 import {name as appName} from './app.json';
-import {Welcome,Login, Register,FoodIndex} from './Screens/index';
+import {Welcome,Login, Register,FoodIndex,ProductGrid} from './Screens/index';
 
 
 // AppRegistry.registerComponent(appName,() =>
@@ -17,4 +17,4 @@ import {Welcome,Login, Register,FoodIndex} from './Screens/index';
 //                             product={fakedProducts}
 //                                 />);
 // AppRegistry.registerComponent(appName, () => () => <Login />);
-AppRegistry.registerComponent(appName, () => () => <FoodIndex />);
+AppRegistry.registerComponent(appName, () => () => <ProductGrid />);
